@@ -5,15 +5,15 @@ const _state = {
   },
 };
 
-export function getGooglePoints() {
+export async function getGooglePoints() {
   return _state.points.google;
 }
 
 /**
  * @param {number} playerNumber - one-based index of player
- * @returns {number} number of points
+ * @returns {Promise<number>} number of points
  */
-export function getPlayersPoints(playerNumber) {
+export async function getPlayersPoints(playerNumber) {
   const playerIndex = playerNumber - 1;
 
   if (playerIndex < 0 || playerIndex > _state.points.players.length - 1) {

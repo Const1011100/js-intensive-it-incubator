@@ -5,11 +5,19 @@ import { GridComponent } from './Grid/Grid.component.js';
 export function AppComponent() {
   const element = document.createElement('div');
 
-  const settingsElement = SettingsComponent();
-  const resultElement = ResultPanelComponent();
-  const gridElement = GridComponent();
+  render(element);
 
-  element.append(settingsElement, resultElement, gridElement);
+  return { element };
+}
 
-  return element;
+async function render(element) {
+  const settingsComponent = await SettingsComponent();
+  const resultComponent = await ResultPanelComponent();
+  const gridComponent = await GridComponent();
+
+  element.append(
+    settingsComponent.element,
+    resultComponent.element,
+    gridComponent.element
+  );
 }
