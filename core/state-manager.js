@@ -103,7 +103,6 @@ googleJumpInterval = setInterval(() => {
 }, _state.settings.googleJumpInterval);
 
 // INTERFSCE / ADAPTER
-
 export async function getGooglePoints() {
   return _state.points.google;
 }

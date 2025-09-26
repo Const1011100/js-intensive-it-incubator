@@ -1,6 +1,5 @@
 import { AppComponent } from './components/App.component.js';
 import { subscribe } from '../core/state-manager.js';
-import { unsubscribe } from '../core/state-manager.js';
 
 const rootElement = document.getElementById('root');
 
