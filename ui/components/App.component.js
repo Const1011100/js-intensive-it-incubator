@@ -3,19 +3,33 @@ import { ResultPanelComponent } from './ResultPanel/ResultPanel.component.js';
 import { GridComponent } from './Grid/Grid.component.js';
 import { LoseComponent } from './Lose/Lose.component.js';
 import { StartComponent } from './Start/Start.component.js';
-import { getGameStatus } from '../../core/state-manager.js';
+import { getGameStatus, subscribe } from '../../core/state-manager.js';
 import { GAME_STATUSES } from '../../core/constants.js';
 
 export function AppComponent() {
+  const localState = { prevGameStatus: null };
+
   const element = document.createElement('div');
 
-  render(element);
+  subscribe(() => {
+    render(element, localState);
+  });
+
+  render(element, localState);
 
   return { element };
 }
 
-async function render(element) {
+async function render(element, localState) {
   const gameStatus = await getGameStatus();
+
+  if (localState.prevGameStatus === gameStatus) {
+    return;
+  }
+  localState.prevGameStatus = gameStatus;
+
+  element.innerHTML = '';
+
   switch (gameStatus) {
     case GAME_STATUSES.SETTINGS: {
       const settingsComponent = await SettingsComponent();
