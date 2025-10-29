@@ -6,7 +6,7 @@ const _state = {
     /**
      * in milliseconds
      */
-    googleJumpInterval: 1000,
+    googleJumpInterval: 2000,
     gridSize: {
       rowsCount: 4,
       columnCount: 4,
@@ -122,7 +122,7 @@ function _catchGoogle(playerNumber) {
   _state.points.players[playerIndex]++;
   _notifyObservers(EVENTS.SCORES_CHANGED);
 
-  if (_state.points.players[playerIndex]++ === _state.settings.pointsToWin) {
+  if (_state.points.players[playerIndex] === _state.settings.pointsToWin) {
     _state.gameStatus = GAME_STATUSES.WIN;
     _notifyObservers(EVENTS.STATUS_CHANGED);
     clearInterval(googleJumpInterval);
@@ -164,7 +164,7 @@ export async function start() {
       newPosition: { ..._state.positions.google },
     });
     _state.points.google++;
-    _notifyObservers(EVENTS.SCORE_CHANGED, {});
+    _notifyObservers(EVENTS.SCORES_CHANGED, {});
 
     if (_state.points.google === _state.settings.pointsToLose) {
       clearInterval(googleJumpInterval);

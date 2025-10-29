@@ -11,7 +11,7 @@ export function ResultPanelComponent() {
   element.classList.add('result__panel');
 
   const observer = (e) => {
-    if (e.name === EVENTS.SCORE_CHANGED) {
+    if (e.name === EVENTS.SCORES_CHANGED) {
       render(element);
     }
   };

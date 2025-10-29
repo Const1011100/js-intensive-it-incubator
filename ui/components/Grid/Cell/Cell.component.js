@@ -10,6 +10,7 @@ import { PlayerComponent } from '../../common/Player/Player.component.js';
 
 export function CellComponent(x, y) {
   const element = document.createElement('td');
+  const localState = { renderVersion: 0 };
 
   let observer = (e) => {
     // if (e.name !== EVENTS.GOOGLE_JUMPED) return;
@@ -20,16 +21,16 @@ export function CellComponent(x, y) {
     )
       return;
     if (e.payload.oldPosition.x === x && e.payload.oldPosition.y === y) {
-      render(element, x, y);
+      render(element, x, y, localState);
     }
     if (e.payload.newPosition.x === x && e.payload.newPosition.y === y) {
-      render(element, x, y);
+      render(element, x, y, localState);
     }
   };
 
   subscribe(observer);
 
-  render(element, x, y);
+  render(element, x, y, localState);
 
   return {
     element,
@@ -39,12 +40,20 @@ export function CellComponent(x, y) {
   };
 }
 
-async function render(element, x, y) {
+async function render(element, x, y, localState) {
+  localState.renderVersion++;
+  const currentRenderVersion = localState.renderVersion;
+
   element.innerHTML = '';
 
   const googlePosition = await getGooglePosition();
   const player1Position = await getPlayerPosition(1);
   const player2Position = await getPlayerPosition(2);
+
+  if (currentRenderVersion < localState.renderVersion) {
+    console.log('NEW VERSION OF RENDERING');
+    return;
+  }
 
   if (googlePosition.x === x && googlePosition.y === y) {
     element.append(GoogleComponent().element);
