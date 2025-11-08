@@ -6,11 +6,14 @@ import { StartComponent } from './Start/Start.component.js';
 import { getGameStatus, subscribe } from '../../core/state-manager.js';
 import { GAME_STATUSES } from '../../core/constants.js';
 import { WinComponent } from './Win/Win.component.js';
+import { AudioComponent } from './Audio/Audio.component.js';
 
 export function AppComponent() {
   const localState = { prevGameStatus: null, cleanupFunctions: [] };
 
   const element = document.createElement('div');
+
+  const audioComponent = AudioComponent();
 
   subscribe(() => {
     render(element, localState);

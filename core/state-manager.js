@@ -121,6 +121,7 @@ function _catchGoogle(playerNumber) {
   const playerIndex = _getPlayerIndexByNumber(playerNumber);
   _state.points.players[playerIndex]++;
   _notifyObservers(EVENTS.SCORES_CHANGED);
+  _notifyObservers(EVENTS.GOOGLE_CAUGHT);
 
   if (_state.points.players[playerIndex] === _state.settings.pointsToWin) {
     _state.gameStatus = GAME_STATUSES.WIN;
@@ -163,6 +164,8 @@ export async function start() {
       oldPosition: oldPosition,
       newPosition: { ..._state.positions.google },
     });
+
+    _notifyObservers(EVENTS.GOOGLE_RUN_AWAY);
     _state.points.google++;
     _notifyObservers(EVENTS.SCORES_CHANGED, {});
 
